@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptForge Lite — AI 프롬프트 빌더 (무료 버전)</title>
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: #12141c;
+      --border: #232738;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --tag-bg: #1e2235;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding: 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .logo { font-size: 22px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid var(--accent); }
+    .pro-banner { background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(168,85,247,0.15) 100%); border: 1px solid rgba(168,85,247,0.4); border-radius: 12px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .pro-banner-text h4 { font-size: 15px; color: #fff; margin-bottom: 4px; }
+    .pro-banner-text p { font-size: 13px; color: var(--text-muted); }
+    .btn-upgrade { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: opacity 0.2s; }
+    .btn-upgrade:hover { opacity: 0.9; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .card-title { font-size: 16px; font-weight: 600; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+    label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
+    textarea, input, select { width: 100%; background: #0c0e15; border: 1px solid var(--border); border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; resize: vertical; outline: none; }
+    textarea:focus, input:focus { border-color: var(--accent); }
+    .template-selector { margin-bottom: 16px; }
+    .variables-container { margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); }
+    .variable-field { margin-bottom: 12px; }
+    .preview-box { background: #080a10; border: 1px solid var(--border); border-radius: 8px; padding: 16px; min-height: 260px; font-family: monospace; font-size: 13px; line-height: 1.6; white-space: pre-wrap; color: #e2e8f0; word-break: break-all; }
+    .stats { display: flex; gap: 16px; margin-top: 12px; font-size: 12px; color: var(--text-muted); }
+    .actions { display: flex; gap: 10px; margin-top: 16px; }
+    .btn { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; transition: background 0.2s; }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--tag-bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: #282d47; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #10b981; color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">⚡ PromptForge <span class="badge">Lite Free</span></div>
+      <div style="font-size: 13px; color: var(--text-muted);">오프라인 무설치 단일 파일 AI 프롬프트 빌더</div>
+    </header>
+
+    <div class="pro-banner">
+      <div class="pro-banner-text">
+        <h4>🚀 Pro 버전으로 업그레이드하고 전문가 기능을 사용해보세요</h4>
+        <p>Claude XML 최적화, OpenAI/Gemini 코드 자동 생성, 100+ 프리미엄 템플릿 번들이 포함되어 있습니다.</p>
+      </div>
+      <button class="btn-upgrade" onclick="alert('Gumroad에서 Pro 버전을 구매하시면 즉시 모든 기능을 사용하실 수 있습니다!')">Pro 버전 구매하기 ($9)</button>
+    </div>
+
+    <div class="grid">
+      <!-- Left Column: Editor & Variables -->
+      <div class="card">
+        <div class="card-title">
+          <span>프롬프트 작성 & 변수 치환</span>
+        </div>
+
+        <div class="template-selector">
+          <label>기본 템플릿 불러오기</label>
+          <select id="templateSelect" onchange="loadTemplate()">
+            <option value="custom">직접 작성하기</option>
+            <option value="codeReview">코드 리뷰 & 리팩토링 전문가</option>
+            <option value="marketingCopy">고전환 바이럴 마케팅 카피라이터</option>
+            <option value="dataExtract">비정형 텍스트 JSON 추출기</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label>프롬프트 템플릿 (변수는 {{변수명}} 형식으로 입력)</label>
+          <textarea id="promptTemplate" rows="8" placeholder="예: 당신은 {{role}}입니다. {{topic}}에 대해 {{style}} 스타일로 작성해주세요."></textarea>
+        </div>
+
+        <div class="variables-container" id="variablesArea">
+          <label>감지된 변수 입력</label>
+          <div id="variablesList" style="font-size: 13px; color: var(--text-muted);">템플릿에 {{변수명}}을 입력하면 여기에 입력창이 자동 생성됩니다.</div>
+        </div>
+      </div>
+
+      <!-- Right Column: Live Output & Stats -->
+      <div class="card">
+        <div class="card-title">
+          <span>실시간 완성 프롬프트</span>
+          <span style="font-size: 12px; color: #10b981;">● 실시간 렌더링</span>
+        </div>
+
+        <div class="preview-box" id="promptPreview"></div>
+
+        <div class="stats">
+          <span id="charCount">글자 수: 0자</span>
+          <span id="tokenEstimate">예상 토큰 수: ~0 토큰</span>
+        </div>
+
+        <div class="actions">
+          <button class="btn" onclick="copyPrompt()">📋 클립보드 복사</button>
+          <button class="btn btn-secondary" onclick="downloadPrompt()">💾 .txt 다운로드</button>
+          <button class="btn btn-secondary" onclick="resetForm()">🔄 초기화</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">복사되었습니다!</div>
+
+  <script>
+    const templates = {
+      codeReview: {
+        text: `당신은 시니어 풀스택 소프트웨어 엔지니어이자 코드 리뷰어입니다.\n\n[목표]\n아래 제공된 {{language}} 코드를 검토하고 성능, 보안, 가독성 측면의 개선점을 도출하세요.\n\n[코드]\n{{code}}\n\n[출력 형식]\n1. 총평 및 점수 (10점 만점)\n2. 주요 발견 취약점/병목 (상/중/하)\n3. 리팩토링된 권장 코드`,
+        vars: { language: "JavaScript", code: "function sum(a,b){ return a+b; }" }
+      },
+      marketingCopy: {
+        text: `당신은 세계적인 직판 마케터이자 카피라이터입니다.\n\n[제품명]: {{product}}\n[타겟 고객]: {{target}}\n[핵심 가치 제안]: {{benefit}}\n\n위 정보를 바탕으로 타겟 고객의 페인 포인트를 건드리고 클릭을 유도하는 헤드라인 3개와 본문 훅을 작성해주세요.`,
+        vars: { product: "PromptForge", target: "1인 개발자 및 마케터", benefit: "프롬프트 제작 시간을 80% 단축" }
+      },
+      dataExtract: {
+        text: `다음 비정형 텍스트에서 주요 엔티티를 추출하여 엄격한 JSON 형식으로 변환해주세요.\n\n[추출 항목]: {{fields}}\n[원본 텍스트]:\n{{raw_text}}`,
+        vars: { fields: "이름, 이메일, 전화번호, 회사명", raw_text: "안녕하세요 홍길동 팀장입니다. (abc@example.com / 010-1234-5678, (주)테크솔루션)" }
+      }
+    };
+
+    const templateInput = document.getElementById('promptTemplate');
+    const variablesList = document.getElementById('variablesList');
+    const previewBox = document.getElementById('promptPreview');
+    const charCount = document.getElementById('charCount');
+    const tokenEstimate = document.getElementById('tokenEstimate');
+    const toast = document.getElementById('toast');
+
+    let variableValues = {};
+
+    function extractVariables(text) {
+      const regex = /\{\{([^}]+)\}\}/g;
+      const matches = new Set();
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        matches.add(match[1].trim());
+      }
+      return Array.from(matches);
+    }
+
+    function renderVariableInputs() {
+      const vars = extractVariables(templateInput.value);
+      if (vars.length === 0) {
+        variablesList.innerHTML = '<span style="color:#6b7280; font-size:12px;">변수({{변수명}})가 없습니다.</span>';
+        updatePreview();
+        return;
+      }
+
+      let html = '';
+      vars.forEach(v => {
+        const val = variableValues[v] || '';
+        html += `
+          <div class="variable-field">
+            <label style="color:#818cf8; font-weight:600;">{{${v}}}</label>
+            <input type="text" data-var="${v}" value="${val.replace(/"/g, '&quot;')}" oninput="onVarChange(this)" placeholder="${v} 값 입력...">
+          </div>
+        `;
+      });
+      variablesList.innerHTML = html;
+      updatePreview();
+    }
+
+    function onVarChange(el) {
+      const v = el.getAttribute('data-var');
+      variableValues[v] = el.value;
+      updatePreview();
+    }
+
+    function updatePreview() {
+      let text = templateInput.value;
+      const vars = extractVariables(text);
+      vars.forEach(v => {
+        const val = variableValues[v] !== undefined ? variableValues[v] : `{{${v}}}`;
+        text = text.split(`{{${v}}}`).join(val);
+      });
+      previewBox.textContent = text;
+      const chars = text.length;
+      charCount.textContent = `글자 수: ${chars}자`;
+      tokenEstimate.textContent = `예상 토큰 수: ~${Math.ceil(chars / 3.5)} 토큰`;
+    }
+
+    function loadTemplate() {
+      const key = document.getElementById('templateSelect').value;
+      if (templates[key]) {
+        templateInput.value = templates[key].text;
+        variableValues = { ...templates[key].vars };
+        renderVariableInputs();
+      }
+    }
+
+    templateInput.addEventListener('input', () => {
+      renderVariableInputs();
+    });
+
+    function copyPrompt() {
+      navigator.clipboard.writeText(previewBox.textContent).then(() => {
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 2000);
+      });
+    }
+
+    function downloadPrompt() {
+      const blob = new Blob([previewBox.textContent], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'promptforge-prompt.txt';
+      a.click();
+    }
+
+    function resetForm() {
+      templateInput.value = '';
+      variableValues = {};
+      renderVariableInputs();
+    }
+
+    // 초기화 실행
+    loadTemplate();
+  </script>
+</body>
+</html>
