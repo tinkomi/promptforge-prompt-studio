@@ -4,7 +4,7 @@
 > Supports Claude XML, OpenAI System Directives, Gemini Structured Prompts, and 1-Click Code Export.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Interactive Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success)](https://mcjin87-eng.github.io/promptforge-prompt-studio/)
+[![Interactive Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success)](https://tinkomi.github.io/promptforge-prompt-studio/)
 [![i18n: 7 Languages](https://img.shields.io/badge/i18n-7_Languages_Supported-green.svg)](#)
 [![Gumroad Pro](https://img.shields.io/badge/Gumroad-PRO_Edition_$9-pink)](https://mcjinster.gumroad.com/l/nqpdjy)
 [![Gumroad Free](https://img.shields.io/badge/Gumroad-Lite_Free_$0+-lightgrey)](https://mcjinster.gumroad.com/l/mzksf)
@@ -28,7 +28,7 @@ Your language preference is automatically remembered across sessions using local
 
 ## 🚀 Live Interactive Demo
 Try the free edition directly in your browser without installing anything:  
-👉 **[Open Live Demo on GitHub Pages](https://mcjin87-eng.github.io/promptforge-prompt-studio/)**
+👉 **[Open Live Demo on GitHub Pages](https://tinkomi.github.io/promptforge-prompt-studio/)**
 
 ---
 
@@ -76,4 +76,4 @@ Try the free edition directly in your browser without installing anything:
 - **PRO Edition ($9)**: [Get Instant Access on Gumroad](https://mcjinster.gumroad.com/l/nqpdjy)
 
 ## 📄 License
-MIT License — Copyright (c) 2026 mcjin87-eng.
+MIT License — Copyright (c) 2026 tinkomi.
