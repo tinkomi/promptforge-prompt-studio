@@ -45,6 +45,17 @@ Try the free edition directly in your browser without installing anything:
 
 ---
 
+
+---
+
+## 📸 Visual Walkthrough & Feature Showcase
+
+### 1. Multi-Model Prompt Architecture (Claude XML, OpenAI, Gemini)
+![Multi-Model Architecture](./assets/gallery-01.png)
+
+### 2. Production Multi-SDK Code Generation (Python, Node.js, cURL)
+![Multi-SDK Code Generation](./assets/gallery-02.png)
+
 ## ⚖️ Edition Comparison
 
 | Capability | Lite (Free) | PRO ($9) |
