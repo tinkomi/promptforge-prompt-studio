@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptForge Lite — AI 프롬프트 빌더 (무료 버전)</title>
+  <title>PromptForge Lite — AI Prompt Engineering Studio (Free Edition)</title>
   <style>
     :root {
       --bg: #090a0f;
@@ -49,83 +49,87 @@
   <div class="container">
     <header>
       <div class="logo">⚡ PromptForge <span class="badge">Lite Free</span></div>
-      <div style="font-size: 13px; color: var(--text-muted);">오프라인 무설치 단일 파일 AI 프롬프트 빌더</div>
+      <div style="font-size: 13px; color: var(--text-muted);">Offline Single-File AI Prompt Builder & Studio</div>
     </header>
 
     <div class="pro-banner">
       <div class="pro-banner-text">
-        <h4>🚀 Pro 버전으로 업그레이드하고 전문가 기능을 사용해보세요</h4>
-        <p>Claude XML 최적화, OpenAI/Gemini 코드 자동 생성, 100+ 프리미엄 템플릿 번들이 포함되어 있습니다.</p>
+        <h4>🚀 Upgrade to PromptForge PRO for Developer & Architecture Features</h4>
+        <p>Unlock Claude XML structured formatting, OpenAI & Gemini SDK code generation, and 50+ curated templates.</p>
       </div>
-      <button class="btn-upgrade" onclick="alert('Gumroad에서 Pro 버전을 구매하시면 즉시 모든 기능을 사용하실 수 있습니다!')">Pro 버전 구매하기 ($9)</button>
+      <a class="btn-upgrade" href="https://mcjinster.gumroad.com/l/nqpdjy" target="_blank">Get PRO ($9)</a>
     </div>
 
     <div class="grid">
       <!-- Left Column: Editor & Variables -->
       <div class="card">
         <div class="card-title">
-          <span>프롬프트 작성 & 변수 치환</span>
+          <span>Prompt Template & Variables</span>
         </div>
 
         <div class="template-selector">
-          <label>기본 템플릿 불러오기</label>
+          <label>Load Starter Template</label>
           <select id="templateSelect" onchange="loadTemplate()">
-            <option value="custom">직접 작성하기</option>
-            <option value="codeReview">코드 리뷰 & 리팩토링 전문가</option>
-            <option value="marketingCopy">고전환 바이럴 마케팅 카피라이터</option>
-            <option value="dataExtract">비정형 텍스트 JSON 추출기</option>
+            <option value="codeReview">Code Review & Security Auditor</option>
+            <option value="marketingCopy">High-Conversion Direct Marketing Copywriter</option>
+            <option value="dataExtract">Unstructured Text to Strict JSON Extractor</option>
+            <option value="custom">Custom (Blank Canvas)</option>
           </select>
         </div>
 
         <div style="margin-bottom: 14px;">
-          <label>프롬프트 템플릿 (변수는 {{변수명}} 형식으로 입력)</label>
-          <textarea id="promptTemplate" rows="8" placeholder="예: 당신은 {{role}}입니다. {{topic}}에 대해 {{style}} 스타일로 작성해주세요."></textarea>
+          <label>Prompt Template (use {{variable_name}} for dynamic slots)</label>
+          <textarea id="promptTemplate" rows="8" placeholder="e.g. You are an expert {{role}}. Analyze {{topic}} focusing on {{focus_area}}..."></textarea>
         </div>
 
         <div class="variables-container" id="variablesArea">
-          <label>감지된 변수 입력</label>
-          <div id="variablesList" style="font-size: 13px; color: var(--text-muted);">템플릿에 {{변수명}}을 입력하면 여기에 입력창이 자동 생성됩니다.</div>
+          <label>Dynamic Variable Slots</label>
+          <div id="variablesList" style="font-size: 13px; color: var(--text-muted);">Slots defined as {{variable_name}} will appear here automatically.</div>
         </div>
       </div>
 
       <!-- Right Column: Live Output & Stats -->
       <div class="card">
         <div class="card-title">
-          <span>실시간 완성 프롬프트</span>
-          <span style="font-size: 12px; color: #10b981;">● 실시간 렌더링</span>
+          <span>Live Compiled Prompt</span>
+          <span style="font-size: 12px; color: #10b981;">● Real-Time Render</span>
         </div>
 
         <div class="preview-box" id="promptPreview"></div>
 
         <div class="stats">
-          <span id="charCount">글자 수: 0자</span>
-          <span id="tokenEstimate">예상 토큰 수: ~0 토큰</span>
+          <span id="charCount">Characters: 0</span>
+          <span id="tokenEstimate">Estimated Tokens: ~0</span>
         </div>
 
         <div class="actions">
-          <button class="btn" onclick="copyPrompt()">📋 클립보드 복사</button>
-          <button class="btn btn-secondary" onclick="downloadPrompt()">💾 .txt 다운로드</button>
-          <button class="btn btn-secondary" onclick="resetForm()">🔄 초기화</button>
+          <button class="btn" onclick="copyPrompt()">📋 Copy to Clipboard</button>
+          <button class="btn btn-secondary" onclick="downloadPrompt()">💾 Download .txt</button>
+          <button class="btn btn-secondary" onclick="resetForm()">🔄 Reset</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="toast" id="toast">복사되었습니다!</div>
+  <div class="toast" id="toast">Copied to clipboard!</div>
 
   <script>
     const templates = {
       codeReview: {
-        text: `당신은 시니어 풀스택 소프트웨어 엔지니어이자 코드 리뷰어입니다.\n\n[목표]\n아래 제공된 {{language}} 코드를 검토하고 성능, 보안, 가독성 측면의 개선점을 도출하세요.\n\n[코드]\n{{code}}\n\n[출력 형식]\n1. 총평 및 점수 (10점 만점)\n2. 주요 발견 취약점/병목 (상/중/하)\n3. 리팩토링된 권장 코드`,
-        vars: { language: "JavaScript", code: "function sum(a,b){ return a+b; }" }
+        text: `You are a Principal Software Architect and Security Auditor.\n\n[Goal]\nReview the provided {{language}} code for performance bottlenecks, security vulnerabilities (OWASP Top 10), and readability.\n\n[Code Context]:\n{{code}}\n\n[Expected Output]:\n1. Executive Summary & Code Quality Rating (out of 10)\n2. High/Medium/Low Security Findings & Bottlenecks\n3. Refactored, Production-Ready Code with explanations`,
+        vars: { language: "TypeScript", code: "async function fetchUserData(userId) {\n  const res = await db.query('SELECT * FROM users WHERE id = ' + userId);\n  return res.rows[0];\n}" }
       },
       marketingCopy: {
-        text: `당신은 세계적인 직판 마케터이자 카피라이터입니다.\n\n[제품명]: {{product}}\n[타겟 고객]: {{target}}\n[핵심 가치 제안]: {{benefit}}\n\n위 정보를 바탕으로 타겟 고객의 페인 포인트를 건드리고 클릭을 유도하는 헤드라인 3개와 본문 훅을 작성해주세요.`,
-        vars: { product: "PromptForge", target: "1인 개발자 및 마케터", benefit: "프롬프트 제작 시간을 80% 단축" }
+        text: `You are an elite direct-response copywriter.\n\n[Product]: {{product}}\n[Target Audience]: {{target_audience}}\n[Core Value Proposition]: {{key_benefit}}\n\nWrite 3 high-converting hook headlines, a PAS (Problem-Agitate-Solution) body copy, and a compelling Call-to-Action.`,
+        vars: { product: "PromptForge", target_audience: "Indie Hackers & AI Engineers", key_benefit: "Build, test, and ship production-grade AI prompts in minutes" }
       },
       dataExtract: {
-        text: `다음 비정형 텍스트에서 주요 엔티티를 추출하여 엄격한 JSON 형식으로 변환해주세요.\n\n[추출 항목]: {{fields}}\n[원본 텍스트]:\n{{raw_text}}`,
-        vars: { fields: "이름, 이메일, 전화번호, 회사명", raw_text: "안녕하세요 홍길동 팀장입니다. (abc@example.com / 010-1234-5678, (주)테크솔루션)" }
+        text: `Extract the specified entities from the following unstructured raw text into strict, valid JSON format.\n\n[Target Fields]: {{fields}}\n[Raw Text]:\n{{raw_text}}\n\nRespond ONLY with valid JSON. Do not include markdown codeblocks or conversational text.`,
+        vars: { fields: "name, email, organization, intent", raw_text: "Hi there! I am Alex Mercer from Acme Cloud (alex@acmecloud.io). We want to migrate our database to AWS this quarter." }
+      },
+      custom: {
+        text: `You are an expert {{role}}.\n\nPerform {{task}} given the following inputs:\n{{inputs}}`,
+        vars: { role: "Product Manager", task: "Generate User Stories", inputs: "User wants to export reports as PDF" }
       }
     };
 
@@ -151,7 +155,7 @@
     function renderVariableInputs() {
       const vars = extractVariables(templateInput.value);
       if (vars.length === 0) {
-        variablesList.innerHTML = '<span style="color:#6b7280; font-size:12px;">변수({{변수명}})가 없습니다.</span>';
+        variablesList.innerHTML = '<span style="color:#6b7280; font-size:12px;">No {{variable_name}} tags detected in template.</span>';
         updatePreview();
         return;
       }
@@ -162,7 +166,7 @@
         html += `
           <div class="variable-field">
             <label style="color:#818cf8; font-weight:600;">{{${v}}}</label>
-            <input type="text" data-var="${v}" value="${val.replace(/"/g, '&quot;')}" oninput="onVarChange(this)" placeholder="${v} 값 입력...">
+            <input type="text" data-var="${v}" value="${val.replace(/"/g, '&quot;')}" oninput="onVarChange(this)" placeholder="Enter value for ${v}...">
           </div>
         `;
       });
@@ -185,8 +189,8 @@
       });
       previewBox.textContent = text;
       const chars = text.length;
-      charCount.textContent = `글자 수: ${chars}자`;
-      tokenEstimate.textContent = `예상 토큰 수: ~${Math.ceil(chars / 3.5)} 토큰`;
+      charCount.textContent = `Characters: ${chars}`;
+      tokenEstimate.textContent = `Estimated Tokens: ~${Math.ceil(chars / 3.8)}`;
     }
 
     function loadTemplate() {
@@ -223,7 +227,7 @@
       renderVariableInputs();
     }
 
-    // 초기화 실행
+    // Initialize with starter template
     loadTemplate();
   </script>
 </body>
