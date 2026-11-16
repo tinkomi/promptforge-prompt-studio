@@ -1,55 +1,68 @@
-﻿# ⚡ PromptForge Lite — AI Prompt Engineering Studio
+# ⚡ PromptForge — Offline AI Prompt Builder & Multi-Model SDK Studio
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success.svg)](https://mcjin87-eng.github.io/promptforge-prompt-studio/)
-[![Gumroad PRO](https://img.shields.io/badge/Gumroad-PRO_Edition_$9-pink.svg)](https://mcjinster.gumroad.com/l/nqpdjy)
-[![100% Offline](https://img.shields.io/badge/Privacy-100%25_Offline-emerald.svg)]()
+> **100% Offline, Single-File HTML Prompt Engineering Studio & Multi-SDK Code Generator.**  
+> Supports Claude XML, OpenAI System Directives, Gemini Structured Prompts, and 1-Click Code Export.
 
-> **PromptForge Lite** is a standalone, offline-first prompt engineering tool that lets you craft, test, and template reusable AI prompts with dynamic variable interpolation and real-time token estimation—directly in your browser with zero data leakage.
-
----
-
-## 🌐 Live Interactive Demo
-🚀 **[Try PromptForge Lite on GitHub Pages &rarr;](https://mcjin87-eng.github.io/promptforge-prompt-studio/)**
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Interactive Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success)](https://mcjin87-eng.github.io/promptforge-prompt-studio/)
+[![i18n: 7 Languages](https://img.shields.io/badge/i18n-7_Languages_Supported-green.svg)](#)
+[![Gumroad Pro](https://img.shields.io/badge/Gumroad-PRO_Edition_$9-pink)](https://mcjinster.gumroad.com/l/nqpdjy)
+[![Gumroad Free](https://img.shields.io/badge/Gumroad-Lite_Free_$0+-lightgrey)](https://mcjinster.gumroad.com/l/mzksf)
+[![Privacy First](https://img.shields.io/badge/Privacy-100%25_Offline-purple)](#)
 
 ---
 
-## ✨ Features (Lite Edition)
+## 🌐 7 Languages Supported Out-of-the-Box
+PromptForge comes with an instant one-click language switcher in the header:
+- **English** (Default)
+- **Español** (Spanish)
+- **Français** (French)
+- **Português** (Portuguese)
+- **简体中文** (Simplified Chinese)
+- **日本語** (Japanese)
+- **한국어** (Korean)
 
-- **Dynamic `{{variable}}` Interpolation**: Type any placeholder like `{{role}}` or `{{topic}}` and instant input controls appear automatically.
-- **Built-in Starter Templates**: Includes ready-to-use templates for Code Refactoring, Direct Response Copywriting, and Structured JSON Schema Extraction.
-- **Real-Time Live Preview**: See your finalized prompt dynamically assembled as you type.
-- **Token & Cost Estimator**: Instant character count and heuristic token metrics to gauge context consumption.
-- **One-Click Export**: Copy directly to clipboard or download as a `.txt` file ready to paste into ChatGPT, Claude, or Gemini.
-- **100% Local & Private**: Runs entirely client-side. Zero server requests, zero tracking, zero API keys required.
+Your language preference is automatically remembered across sessions using local browser storage.
 
 ---
 
-## 📊 Lite (Free) vs. PRO Comparison
+## 🚀 Live Interactive Demo
+Try the free edition directly in your browser without installing anything:  
+👉 **[Open Live Demo on GitHub Pages](https://mcjin87-eng.github.io/promptforge-prompt-studio/)**
 
-| Feature | PromptForge Lite (Free) | PromptForge PRO ($9) |
+---
+
+## ✨ Features
+
+- **Zero-Setup Single File**: Self-contained `index.html` running client-side with no dependencies or build tools.
+- **Dynamic Variable Interpolation**: Use `{{variable}}` syntax to preview prompts with live value injection.
+- **Multi-Model Optimization Modes**:
+  - Claude XML Tags (`<system>`, `<context>`, `<instructions>`)
+  - OpenAI Markdown Directives (`### Role`, `### Constraints`)
+  - Gemini Structured Reasoning blocks
+- **Real-Time Token & Word Estimator**: Estimate token usage instantly offline before sending requests to paid model APIs.
+- **Complete Privacy**: Zero tracking, zero analytics, zero external API calls. Your proprietary prompts remain confidential.
+
+---
+
+## ⚖️ Edition Comparison
+
+| Capability | Lite (Free) | PRO ($9) |
 | :--- | :---: | :---: |
-| **Price** | **Free ($0)** | **$9 One-Time** |
-| **Dynamic `{{variable}}` Fields** | ✅ Yes | ✅ Yes |
-| **Real-Time Token Estimator** | ✅ Yes | ✅ Yes |
-| **Offline Privacy Guarantee** | ✅ 100% Client-Side | ✅ 100% Client-Side |
-| **Commercial Use License** | Personal / Open-Source | Commercial / Client Work |
-| **Model Architectures** | Standard Plain Text | Markdown, Claude XML, OpenAI System, Gemini Rules |
-| **Multi-SDK Code Generator** | ❌ No | ✅ Python (OpenAI, Anthropic, Google) & Node.js |
-| **Enterprise Prompt Templates** | 3 Starter Templates | 50+ Enterprise Multi-Step Prompts |
-| **Token Cost Estimator** | Heuristic Tokenizer | Live GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro |
-| **Where to Get** | This GitHub Repo | **[Get PromptForge PRO on Gumroad](https://mcjinster.gumroad.com/l/nqpdjy)** |
+| **Runtime Architecture** | Standalone Single HTML | Standalone Single HTML |
+| **Language Support** | 7 Languages | 7 Languages |
+| **Variable Interpolation (`{{var}}`)** | Standard | Advanced Multi-Variable Matrix |
+| **Token & Character Estimator** | Real-Time | Real-Time with API Cost Calculator |
+| **Multi-SDK Code Generators** | Python & Node.js Snippets | Python, Node.js, cURL, Go & Rust |
+| **Prompt Template Library** | 3 Core Starters | 20+ Production Battle-Tested Templates |
+| **Export Formats** | Plain Text & Markdown | JSON, Markdown, Python & JS Modules |
+| **Commercial Use License** | Personal / Open Source | Commercial & Enterprise Allowed |
 
 ---
 
-## 🚀 Quick Start
-
-1. Clone or download this repository.
-2. Open `index.html` in Chrome, Firefox, Safari, or Edge.
-3. Select a template or write your custom prompt.
-4. Fill in the dynamic variable values and copy or export your prompt!
-
----
+## 📥 Get PromptForge
+- **Free Lite Edition**: [Download Free on Gumroad](https://mcjinster.gumroad.com/l/mzksf) or clone this repository.
+- **PRO Edition ($9)**: [Get Instant Access on Gumroad](https://mcjinster.gumroad.com/l/nqpdjy)
 
 ## 📄 License
-PromptForge Lite is released under the **MIT License**.
+MIT License — Copyright (c) 2026 mcjin87-eng.
